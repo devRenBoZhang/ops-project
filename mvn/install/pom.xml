@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>aicai</groupId>
+	<artifactId>work-project</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>work-project</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules><module>../../../cps-project/cps-services-project/cps-services-facade</module>
+<module>../../../cps-project/cps-facade-project</module>
+<module>../../../cps-project/cps-libs-project</module>
+<module>../../../trade-project/trade-lib-project</module>
+<module>../../../trade-project/trade-facade-project</module>
+<module>../../../task-project/task-facade</module>
+<module>../../../merchant-project/merchant-facade-project</module>
+<module>../../../price-project/price-facade-project</module>
+</modules></project>

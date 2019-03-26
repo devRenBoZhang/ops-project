@@ -1,0 +1,245 @@
+###########################################
+####syn name [projects]
+####
+####
+###########################################
+#!/bin/bash
+
+pushd `dirname $0`/.. > /dev/null
+BASE=`pwd`
+popd > /dev/null
+cd ${BASE}
+
+
+. ${BASE}/lib/config.sh
+. ${BASE}/lib/fun_base.sh
+. ${BASE}/lib/git-help/fun_git.sh
+
+
+function describe() {
+    echo -e "syn (选项) (分支名) \n\n【选项】\n-b参数:branch指定项目分支，以“:”分隔项目和分支；以“,”分隔项目【projectName:branchName,A:B】\n-p参数:projects指定项目，多个项目以“,”分隔\n-q:quiet减少日志输出 \n-v:valid验证是否合并master \n-h:help帮助"
+}
+
+function synArgsDesc() {
+    if [[ "X${quietLog}X" != "XyX" ]]; then
+        synArgsDesc="syn works args summary ######\n###### baseBranch:${branchName}"
+        if [[ "XX" != "X${ass_syn_pro_workStr}X" ]]; then
+            synArgsDesc="${synArgsDesc}\n###### works:${ass_syn_pro_workStr}"
+        else
+            synArgsDesc="${synArgsDesc}\n###### works:${syn_pro_str}"
+        fi
+        if [[ "XX" != "X${customWorkBra}X" ]]; then
+            synArgsDesc="${synArgsDesc}\n###### customBranch:${customWorkBra##}"
+        fi
+
+        echoBase "${synArgsDesc}"
+    fi
+}
+
+function synPro() {
+    work=$1
+    work=${work##*/}
+    work="${work%%-project*}-project"
+    isContain=`isContainWork ${work} ${ass_syn_pro_workStr}`
+    if [[ "XyX" != "X${isContain}X" ]]; then
+        return 1
+    fi
+    git status > /dev/null 2>&1
+    if [[ $? -ne 0 ]]
+    then
+        echoWarn "${work} not a git repository, please check.";
+        return 1
+    fi
+
+    synBranchName=`echo "${customWorkBra}" | grep ${work} | sed "s/.*${work}:\(\S\+\).*/\1/"`
+    if [[ "XX" == "X${synBranchName}X" ]]; then
+        if [[ "XyX" == "X${synLocal}X" ]]; then
+            synBranchName=`git symbolic-ref -q HEAD | cut -b 12-`
+        else
+            synBranchName=${branchName}
+        fi
+    fi
+    echoLocation "$work syn ${synBranchName} starting"
+    checkout_branch ${synBranchName}
+    if [[ $? -ne 0 ]]; then
+        echoError "${work} syn error.";
+    else
+        cur_cc_syn=`git symbolic-ref -q HEAD | cut -b 12-`
+        echoSuccess "${work} syn success. branch is in ${cur_cc_syn}"
+        if [[ "X${synBranchName}X" == "X${cur_cc_syn}X"  ]]; then
+            synExactWorks="${synExactWorks} ${work}"
+        fi
+    fi
+
+    #### merge master valid
+    merge_master_diff=`git log ..origin/master`
+    if [[ -z "${merge_master_diff}" ]]; then
+        return 1
+    fi
+    if [[ "XyX" != "X${master_diff_valid}X" ]]; then
+        noMergeMasterWorks="${noMergeMasterWorks} ${work}"
+        return 1
+    fi
+    git log ..origin/master --stat
+    echoInput "work:${work} branch:${synBranchName} has not merge master. try merge safely? (y or n)"
+    read mergeMasterSafe
+    if [[ "XyX" == "X${mergeMasterSafe}X" ]]; then
+        git merge origin/master
+        if [[ $? -ne 0 ]]; then
+            git reset --hard origin/${synBranchName} 2> /dev/null
+            echoError "merge master error. please contact feature developer. ";
+            exit 2
+        else
+            echoSuccess "${work} merge master success"
+        fi
+    else
+        noMergeMasterWorks="${noMergeMasterWorks} ${work}"
+    fi
+}
+
+########################################################################################################################
+#################### start shell
+branchName="master"
+# 无参数默认更新本分支
+if [[ $# -lt 1 ]]
+then
+    syn.sh -l
+    exit 0
+fi
+
+ass_syn_pro_workStr=`getWorks 'work'`
+
+TEMP=`getopt -o "b:hqp:vl" -n "syn.sh" -- "$@" 2> /dev/null`
+if [[ $? != 0 ]]; then
+    echoError "param error";
+    describe;
+    exit 1;
+fi
+eval set -- "${TEMP}"
+while true; do
+    case "$1" in
+        -b)
+            bAliasArgs=$2
+            bAliasArray=( ${bAliasArgs//,/ } )
+            for arg in ${bAliasArray[*]}
+            do
+                workAlias=${arg%%:*}
+                branchAlias=${arg##*:}
+                if [[ "XX" == "X${workAlias}X" || "XX" == "X${branchAlias}X" || "X${branchAlias}X" == "X${workAlias}X" ]]; then
+                    echoError "option -b is Illegal, please check"
+                    describe;
+                    shift 2;
+                    exit 0;
+                fi
+                workName="${workAlias%%-project*}-project:${branchAlias}"
+                customWorkBra="${customWorkBra} ${workName}"
+            done
+            shift 2 ;;
+        -h)
+            describe;
+            shift;
+            exit 0 ;;
+        -q)
+            quietLog="y";
+            shift ;;
+        -p)
+            ass_syn_pro_workStr=`getWorks $2`
+            if [[ $? != 0 ]]; then
+                exit 2;
+            fi
+            if [[ "XX" == "X${ass_syn_pro_workStr}X" ]]; then
+                echoError "assign syn project error. no this config. please check"
+                exit 2
+            fi
+            if [[ "XallX" == "X${ass_syn_pro_workStr}X" ]]; then
+                ass_syn_pro_workStr=''
+            fi
+            shift 2 ;;
+        -v)
+            master_diff_valid="y"
+            shift
+        ;;
+        -l)
+            synLocal="y"
+            shift
+        ;;
+        --) shift; break ;;
+        *)
+            echoError "param parse error";
+            describe
+            exit 1 ;;
+    esac
+done
+for arg do
+    args=${args}","${arg}
+done
+argArray=( ${args//,/ } )
+branchName=${argArray[0]}
+
+if [[ "XX" == "X${branchName}X" && "XX" == "X${synLocal}X" ]]; then
+    echoError "branch name is necessary"
+    exit 2
+fi
+
+### syn git repository project
+syn_gitReStr=`getConfig "gitRep_dirs"`
+if [[ "XX" == "X${syn_gitReStr}X" ]]; then
+    echoWarn "no config execute dir list. please check"
+    exit 2
+fi
+syn_gitReps=( ${syn_gitReStr//,/ } )
+for gitRep in ${syn_gitReps[*]}
+do
+    cd ${gitRep};
+    syn_pro_str=`getDirProjectNames`
+    if [[ "XX" == "X${syn_pro_str}X" ]]; then
+        echoWarn "${gitRep} no project found. please check"
+        continue
+    fi
+
+    synArgsDesc
+
+    syn_pro_work=( ${syn_pro_str//,/ } )
+    for work in ${syn_pro_work[*]}
+    do
+        cd "${gitRep}/$work"
+        synPro `pwd`
+    done
+done
+
+### syn  special project
+syn_gitProStr=`getConfig "gitRep_pros"`
+if [[ "XX" != "X${syn_gitProStr}X" ]]; then
+    syn_pro_str=""
+    synPros=( ${syn_gitProStr//,/ } )
+    for pro in ${synPros[*]}
+    do
+        proName=${pro##*/}
+        if [[ "XX" == "X${syn_pro_str}X" ]]; then
+            syn_pro_str=${proName}
+        else
+            syn_pro_str="${syn_pro_str},${proName}"
+        fi
+    done
+    synArgsDesc
+
+    syn_pro_str=${syn_gitProStr}
+    syn_pro_work=( ${syn_pro_str//,/ } )
+    for work in ${syn_pro_work[*]}
+    do
+        cd "$work"
+        synPro `pwd`
+    done
+fi
+
+resultDesc="execute result summary ######"
+if [[ "XX" != "X${noMergeMasterWorks}X" ]]; then
+    echoError "these projects behind master [${noMergeMasterWorks}]"
+fi
+if [[ "XX" != "X${synExactWorks}X" ]]; then
+    echoBase "these projects exists exact branch [${synExactWorks}]"
+else
+    echoError "these projects requires at least one branch to be right"
+fi
+
+

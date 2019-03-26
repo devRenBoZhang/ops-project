@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>aicai</groupId>
+	<artifactId>work-project</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>work-project</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules><module>../../../cps-project/cps-facade-project/cps-facade-active</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-cart</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-cms</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-config</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-coupon</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-crm</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-manager</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-merchant</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-product</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-search</module>
+<module>../../../cps-project/cps-facade-project/cps-facade-sns</module>
+<module>../../../cps-project/cps-facade-project</module>
+<module>../../../cps-project/cps-libs-project/cps-component-app</module>
+<module>../../../cps-project/cps-libs-project/cps-lib-facade-base</module>
+<module>../../../cps-project/cps-libs-project/cps-libs-cms</module>
+<module>../../../cps-project/cps-libs-project/cps-libs-service</module>
+<module>../../../cps-project/cps-libs-project/cps-libs-trade</module>
+<module>../../../cps-project/cps-libs-project/cps-libs-user-web</module>
+<module>../../../cps-project/cps-libs-project/cps-libs-web</module>
+<module>../../../cps-project/cps-libs-project</module>
+<module>../../../cps-project/cps-services-project/cps-services-active</module>
+<module>../../../cps-project/cps-services-project/cps-services-cart</module>
+<module>../../../cps-project/cps-services-project/cps-services-cms</module>
+<module>../../../cps-project/cps-services-project/cps-services-config</module>
+<module>../../../cps-project/cps-services-project/cps-services-coupon</module>
+<module>../../../cps-project/cps-services-project/cps-services-crm</module>
+<module>../../../cps-project/cps-services-project/cps-services-facade</module>
+<module>../../../cps-project/cps-services-project/cps-services-manager</module>
+<module>../../../cps-project/cps-services-project/cps-services-merchant</module>
+<module>../../../cps-project/cps-services-project/cps-services-product</module>
+<module>../../../cps-project/cps-services-project/cps-services-recharge</module>
+<module>../../../cps-project/cps-services-project/cps-services-search</module>
+<module>../../../cps-project/cps-services-project/cps-services-sns</module>
+<module>../../../cps-project/cps-services-project/cps-services-trade</module>
+<module>../../../cps-project/cps-services-project</module>
+<module>../../../cps-project/cps-task-project/cps-task-external</module>
+<module>../../../cps-project/cps-task-project/cps-task-solr</module>
+<module>../../../cps-project/cps-task-project</module>
+<module>../../../cps-project/cps-web-project/cps-web-app</module>
+<module>../../../cps-project/cps-web-project/cps-web-backend</module>
+<module>../../../cps-project/cps-web-project/cps-web-external</module>
+<module>../../../cps-project/cps-web-project/cps-web-h5</module>
+<module>../../../cps-project/cps-web-project/cps-web-merchant</module>
+<module>../../../cps-project/cps-web-project/cps-web-site</module>
+<module>../../../cps-project/cps-web-project</module>
+<module>../../../cps-project</module>
+<module>../../../merchant-project/merchant-facade-project/merchant-facade-common</module>
+<module>../../../merchant-project/merchant-facade-project/merchant-facade-mq</module>
+<module>../../../merchant-project/merchant-facade-project/merchant-facade-product</module>
+<module>../../../merchant-project/merchant-facade-project/merchant-facade-shop</module>
+<module>../../../merchant-project/merchant-facade-project/merchant-facade-thirdparty</module>
+<module>../../../merchant-project/merchant-facade-project</module>
+<module>../../../merchant-project/merchant-services-project/merchant-common</module>
+<module>../../../merchant-project/merchant-services-project/merchant-mq</module>
+<module>../../../merchant-project/merchant-services-project/merchant-p-search</module>
+<module>../../../merchant-project/merchant-services-project/merchant-product</module>
+<module>../../../merchant-project/merchant-services-project/merchant-shop</module>
+<module>../../../merchant-project/merchant-services-project/merchant-thirdparty</module>
+<module>../../../merchant-project/merchant-services-project</module>
+<module>../../../merchant-project</module>
+<module>../../../price-project</module>
+<module>../../../price-project/price-facade-project</module>
+<module>../../../price-project/price-facade-project/price-facade-discount</module>
+<module>../../../price-project/price-services-project</module>
+<module>../../../price-project/price-services-project/price-services-discount</module>
+<module>../../../task-project</module>
+<module>../../../task-project/task-consumer</module>
+<module>../../../task-project/task-facade</module>
+<module>../../../trade-project</module>
+<module>../../../trade-project/trade-facade-project</module>
+<module>../../../trade-project/trade-facade-project/trade-facade-core</module>
+<module>../../../trade-project/trade-facade-project/trade-facade-expose</module>
+<module>../../../trade-project/trade-facade-project/trade-facade-logistics</module>
+<module>../../../trade-project/trade-facade-project/trade-facade-refund</module>
+<module>../../../trade-project/trade-facade-project/trade-facade-scene</module>
+<module>../../../trade-project/trade-facade-project/trade-facade-thirdparty</module>
+<module>../../../trade-project/trade-lib-project</module>
+<module>../../../trade-project/trade-lib-project/trade-lib-component-base</module>
+<module>../../../trade-project/trade-lib-project/trade-lib-facade-base</module>
+<module>../../../trade-project/trade-services-project</module>
+<module>../../../trade-project/trade-services-project/trade-services-core</module>
+<module>../../../trade-project/trade-services-project/trade-services-logistics</module>
+<module>../../../trade-project/trade-services-project/trade-services-mq</module>
+<module>../../../trade-project/trade-services-project/trade-services-refund</module>
+<module>../../../trade-project/trade-services-project/trade-services-scene</module>
+<module>../../../trade-project/trade-services-project/trade-services-search</module>
+<module>../../../trade-project/trade-services-project/trade-services-thirdparty</module>
+<module>../../../trade-project/trade-web-project</module>
+</modules></project>
