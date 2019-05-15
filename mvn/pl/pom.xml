@@ -83,8 +83,10 @@
 <module>../../../merchant-project</module>
 <module>../../../price-project</module>
 <module>../../../price-project/price-facade-project</module>
+<module>../../../price-project/price-facade-project/price-facade-coupon</module>
 <module>../../../price-project/price-facade-project/price-facade-discount</module>
 <module>../../../price-project/price-services-project</module>
+<module>../../../price-project/price-services-project/price-services-coupon</module>
 <module>../../../price-project/price-services-project/price-services-discount</module>
 <module>../../../task-project</module>
 <module>../../../task-project/task-consumer</module>
