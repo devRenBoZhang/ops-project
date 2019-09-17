@@ -58,12 +58,12 @@ function switch_branch() {
 
 function fetch_branch() {
     curDirName=`getCurDirName`
-    synRemote $1
     rel_new=$1
+    # 必须直接更新一次，防止本地origin分支在但非最新
+    synRemote $1
     re_rel="remotes/origin/$1"
     bb_new=`git branch -a | grep -w ${re_rel} | sed s/[[:space:]]//g`
-    if [[ -n "$bb_new" ]] && [[ ${#bb_new} == ${#re_rel} ]]
-    then
+    if [[ -n "$bb_new" ]] && [[ ${#bb_new} == ${#re_rel} ]];then
         echoProcess "checkout $1 from remote starting"
         git checkout -b "$rel_new" "origin/$rel_new"
         if [[ $? -ne 0 ]]

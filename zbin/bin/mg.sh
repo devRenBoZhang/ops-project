@@ -16,7 +16,7 @@ cd ${BASE}
 . ${BASE}/lib/git-help/fun_git.sh
 
 function describe() {
-    echo -e "mg (选项) 合并分支(多个分支冒号分隔) 基准分支 \n\n【选项】 \n-p参数:projects项目名,以“,”分隔 \n-h:help帮助"
+    echo -e "mg (选项) 合并分支(多个分支冒号分隔) (基准分支) \n\n【选项】 \n-p参数:projects项目名,以“,”分隔 \n-h:help帮助"
 }
 
 function dbArgsDesc() {
@@ -79,11 +79,11 @@ if [[ "XX" == "X${mergeBranchs}X" ]]; then
     exit 2
 fi
 mergeBranchs=${mergeBranchs//:/,}
-if [[ "XX" == "X${baseBranch}X" ]]; then
-    echoError "baseBranch is necessary"
-    describe
-    exit 2
-fi
+#if [[ "XX" == "X${baseBranch}X" ]]; then
+#    echoError "baseBranch is necessary"
+#    describe
+#    exit 2
+#fi
 
 mg_gitReStr=`getConfig "gitRep_dirs"`
 if [[ "XX" == "X${mg_gitReStr}X" ]]; then
@@ -113,7 +113,7 @@ do
     fi
     dbArgsDesc
     mg_pro_work=( ${mg_pro_str//,/ } )
-    #搜集基础分支
+    #搜集基准分支，如果没有指定基础分支的则使用当前分支
     for work in ${mg_pro_work[*]}
     do
         work="${work%%-project*}-project"
@@ -121,6 +121,7 @@ do
         if [[ "XyX" != "X${isContain}X" ]]; then
             continue
         fi
+
         if [[ -n "${baseBranch}" ]]; then
             branch_wk="${baseBranch}"
         else

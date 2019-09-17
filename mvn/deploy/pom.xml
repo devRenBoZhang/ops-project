@@ -21,9 +21,12 @@
 		</plugins>
 	</build>
 
-	<modules><module>../../../cps-project/cps-services-project/cps-services-facade</module>
+	<modules>
+<module>../../../cps-project/cps-services-project/cps-services-facade</module>
 <module>../../../cps-project/cps-facade-project</module>
-<module>../../../cps-project/cps-libs-project</module>
-<module>../../../trade-project/trade-lib-project</module>
 <module>../../../trade-project/trade-facade-project</module>
+<module>../../../trade-project/trade-lib-project</module>
+<module>../../../cps-project/cps-libs-project</module>
+<module>../../../yuny-project/yuny-project-common/yuny-common-facade</module>
+<module>../../../yuny-project/yuny-project-facade</module>
 </modules></project>

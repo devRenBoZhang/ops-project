@@ -21,12 +21,19 @@
 		</plugins>
 	</build>
 
-	<modules><module>../../../cps-project/cps-services-project/cps-services-facade</module>
-<module>../../../cps-project/cps-facade-project</module>
-<module>../../../cps-project/cps-libs-project</module>
-<module>../../../trade-project/trade-lib-project</module>
-<module>../../../trade-project/trade-facade-project</module>
-<module>../../../task-project/task-facade</module>
-<module>../../../merchant-project/merchant-facade-project</module>
+	<modules>
+<module>../../../aicai-project/aicai-services-base-project/aicai-services-base-facade</module>
+<module>../../../aicai-project/aicai-libs-project</module>
+<module>../../../aicai-project/aicai-facade-project</module>
+<module>../../../aicai-project/aicai-services-project/aicai-services-facade</module>
+<module>../../../cps-project/cps-services-project/cps-services-facade</module>
 <module>../../../price-project/price-facade-project</module>
+<module>../../../cps-project/cps-facade-project</module>
+<module>../../../task-project/task-facade</module>
+<module>../../../trade-project/trade-facade-project</module>
+<module>../../../trade-project/trade-lib-project</module>
+<module>../../../cps-project/cps-libs-project</module>
+<module>../../../merchant-project/merchant-facade-project</module>
+<module>../../../yuny-project/yuny-project-common/yuny-common-facade</module>
+<module>../../../yuny-project/yuny-project-facade</module>
 </modules></project>

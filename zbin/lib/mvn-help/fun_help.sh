@@ -54,7 +54,16 @@ function parsePomInfo() {
             do
                 executePathCmd='find ./'${work}'/ -maxdepth 1 -name pom.xml | '"${relatePathCmd}| sed  \"s/\.\/\(.*\)\/pom\.xml/<module>${pomRelativePath}\1<\/module>/\""
                 echoProcess "###### ${work} reloadModules stating...."
-                eval ${executePathCmd} >> ${pomDir}/${reloadType}/pom.xml
+                mav_pro_e_v=`eval ${executePathCmd}`
+#                eval ${executePathCmd} >> ${pomDir}/${reloadType}/pom.xml
+                mav_pro_e_v_c_t=${mav_pro_e_v%<*}
+                mav_pro_e_v_c_t=${mav_pro_e_v_c_t##*/}
+                f_h_p_mv_v=`cat ${pomDir}/${reloadType}/pom.xml | grep -wq "${mav_pro_e_v_c_t}" && echo 1 || echo 0`
+                if [[ ${f_h_p_mv_v} -eq 0 ]];then
+                   echo ${mav_pro_e_v} >> ${pomDir}/${reloadType}/pom.xml
+                else
+                   echoError "project is repeat. please check and fix. work:${work}, project:${mav_pro_e_v_c_t}"
+                fi
             done
         ;;
         "pl")
@@ -62,6 +71,11 @@ function parsePomInfo() {
             pl_pro_work=( ${parse_pro_str//,/ } )
             for work in ${pl_pro_work[*]}
             do
+                f_h_p_pl_v=`cat ${pomDir}/${reloadType}/pom.xml | grep -wq "\/${work}" && echo 1 || echo 0`
+                if [[ ${f_h_p_pl_v} -ne 0 ]];then
+                    echoError "project is repeat. please check and fix. project:${work}"
+                    continue
+                fi
                 executePathCmd='find ./'${work}'/ -name pom.xml | '"${relatePathCmd}| sed  \"s/\.\/\(.*\)\/pom\.xml/<module>${pomRelativePath}\1<\/module>/\""
                 echoProcess "###### ${work} reloadModules stating...."
                 eval ${executePathCmd} >> ${pomDir}/${reloadType}/pom.xml

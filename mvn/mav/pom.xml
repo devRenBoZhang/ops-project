@@ -21,9 +21,12 @@
 		</plugins>
 	</build>
 
-	<modules><module>../../../cps-project</module>
+	<modules>
+<module>../../../aicai-project</module>
+<module>../../../cps-project</module>
 <module>../../../merchant-project</module>
 <module>../../../price-project</module>
 <module>../../../task-project</module>
 <module>../../../trade-project</module>
+<module>../../../yuny-project</module>
 </modules></project>

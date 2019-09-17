@@ -10,5 +10,6 @@ cd ${BASE}
 . ${BASE}/lib/git-help/fun_git.sh
 . ${BASE}/lib/mvn-help/fun_help.sh
 
-getRelativeDir "/d/GitRepository/ops-project/mvn/pl" "/d/GitRepository_ssh/trade-project"
+#getRelativeDir "/d/GitRepository/ops-project/mvn/pl" "/d/GitRepository_ssh/trade-project"
 
+getProConfigs "score-mall-B"
