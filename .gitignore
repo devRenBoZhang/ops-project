@@ -1,3 +1,4 @@
 /ops-project
 *.iml
 .idea
+*.code-workspace
